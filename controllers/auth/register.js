@@ -1,4 +1,5 @@
 import { userModel } from "../../models/index.js";
+import { v4 as uuidv4 } from "uuid";
 
 /**
  *
@@ -7,7 +8,12 @@ import { userModel } from "../../models/index.js";
  * @return - obj contain statusCode, message, from
  */
 export default async function (req, res) {
-  const userData = req.body;
+  const data = req.body;
+
+  const userData = {
+    ...data,
+    activationCode: uuidv4(),
+  };
 
   try {
     const newUser = await userModel.create(userData);
