@@ -39,7 +39,6 @@ const userSchema = mongoose.Schema(
     activationCode: {
       type: String,
       unique: true,
-      default: uuidv4(),
     },
   },
   {
