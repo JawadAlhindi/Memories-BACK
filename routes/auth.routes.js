@@ -29,4 +29,6 @@ router.get(
   authCons.verifyToken
 );
 
+router.get("/verifyCode", authCons.verifyCode);
+
 export default router;
