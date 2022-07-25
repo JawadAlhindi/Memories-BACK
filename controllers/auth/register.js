@@ -1,5 +1,6 @@
-import { userModel } from "../../models/index.js";
 import { v4 as uuidv4 } from "uuid";
+import { userModel } from "../../models/index.js";
+import { email } from "../../services/index.js";
 
 /**
  *
@@ -19,6 +20,12 @@ export default async function (req, res) {
     const newUser = await userModel.create(userData);
 
     await newUser.save();
+
+    await email.activationCode(
+      newUser.username,
+      newUser.email,
+      userData.activationCode
+    );
 
     res.status(201).json({
       statusCode: 201,
