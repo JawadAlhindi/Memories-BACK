@@ -2,10 +2,11 @@ import client from "./options.js";
 
 const domain =
   process.env.NODE_ENV === "development"
-    ? "localhost:3000"
-    : "memories.tno-msa.com";
+    ? "http://localhost:3000"
+    : "https://memories.tno-msa.com";
 
 const sendEmail = async (name, email, code) => {
+  const link = `${domain}/activation?code=${code}`;
   const sentEmail = await client.sendMail({
     from: '"Memories Family" <foo@example.com>',
     to: email,
@@ -16,7 +17,7 @@ const sendEmail = async (name, email, code) => {
         <p>We are glad to have you in the Memories family!</p>
         <p>In order to confirm your registration, we kindly ask you to activate your account by clicking on the link below:</p>
         </div>
-        <div><p>http://${domain}/activation?code=${code}</p></div>`,
+        <div><a href=${link} alt="activation link">${link}</a></div>`,
   });
 
   console.log("Message sent: %s", sentEmail.messageId);
