@@ -18,7 +18,7 @@ app.use(cookieParser());
 
 //Main Routes
 app.use("/auth", route.auth);
-// app.use("/memory", route.memeory);
+app.use("/memory", route.memory);
 // app.use("/comment", route.comment);
 // app.use("/tags", route.tags);
 // app.use("/titles", route.titles);
