@@ -6,9 +6,11 @@ export default async function verifyRefreshToken(req, res, next) {
 
   if (!refreshToken) {
     return res.status(404).json({
-      statusCode: 404,
-      from: "middlewares/auth/verifyRefreshToken 1",
-      message: "Please Login.",
+      refreshToken: {
+        statusCode: 404,
+        from: "middlewares/auth/verifyRefreshToken 1",
+        message: "Please Login.",
+      },
     });
   }
 
@@ -21,17 +23,21 @@ export default async function verifyRefreshToken(req, res, next) {
     res.clearCookie(cookiesConfig.refresh.name);
 
     return res.status(401).json({
-      statusCode: 401,
-      from: "middlewares/auth/verifyRefreshToken 2",
-      message: "Your Session has been expired. Please Login again.",
+      refreshToken: {
+        statusCode: 401,
+        from: "middlewares/auth/verifyRefreshToken 2",
+        message: "Your Session has been expired. Please Login again.",
+      },
     });
   } else if (verifyToken.isSecretNotValid) {
     res.clearCookie(cookiesConfig.refresh.name);
 
     return res.status(406).json({
-      statusCode: 406,
-      from: "middlewares/auth/verifyRefreshToken 3",
-      message: "Your credentials are invalid. Please try login.",
+      refreshToken: {
+        statusCode: 406,
+        from: "middlewares/auth/verifyRefreshToken 3",
+        message: "Your credentials are invalid. Please try login.",
+      },
     });
   }
 
