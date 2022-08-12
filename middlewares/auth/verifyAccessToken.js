@@ -27,7 +27,7 @@ export default async function verifyAccessToken(req, res, next) {
       overwrite: true,
     });
 
-    return res.status(201).json({
+    res.locals.accessToken = {
       statusCode: 201,
       isAuth: true,
       from: "middlewares/auth/verifyAccessToken 2",
@@ -35,14 +35,15 @@ export default async function verifyAccessToken(req, res, next) {
       data: {
         accessToken: cookiesConfig.access.name,
       },
-    });
+    };
   } else if (verifyToken.isSecretNotValid) {
     res.clearCookie(cookiesConfig.access.name);
 
     return res.status(406).json({
       statusCode: 406,
+      isAuth: false,
       from: "middlewares/auth/verifyAccessToken 3",
-      message: "Your credentials are invalid. Please try login.",
+      message: "Your credentials are invalid. Please try login again.",
     });
   }
 
