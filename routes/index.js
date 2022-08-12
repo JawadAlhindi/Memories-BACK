@@ -1,3 +1,4 @@
 import auth from "./auth.routes.js";
+import memory from "./memory.routes.js";
 
-export default { auth };
+export default { auth, memory };
