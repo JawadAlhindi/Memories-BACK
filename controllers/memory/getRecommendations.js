@@ -1,13 +1,8 @@
 import { memoryModel } from "../../models/index.js";
 import { helpers } from "../../utils/index.js";
 
-export default async function fetchRecommendations(req, res) {
+export default async function getRecommendations(req, res) {
   const { _id } = req.params;
-
-  //TODO: convert this to middleware
-  // if (!mongoose.Types.ObjectId.isValid(_id)) {
-  //   return res.status(404).send("No Post with that ID was found.");
-  // }
 
   try {
     const memory = await memoryModel.findById(_id).lean();
