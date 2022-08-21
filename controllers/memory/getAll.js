@@ -5,11 +5,11 @@ export default async function (req, res) {
   const { page } = req.query;
   const LIMIT = 8;
   const startIndex = (parseInt(page) - 1) * LIMIT;
-  let totalNumberOfPages = 0;
   let memories = [];
+  let numberOfMemories = 1;
 
   try {
-    totalNumberOfPages = await memoryModel.countDocuments();
+    numberOfMemories = await memoryModel.countDocuments();
   } catch (error) {
     console.log(error);
     return res.status(503).json({
@@ -41,7 +41,7 @@ export default async function (req, res) {
       from: "controllers/memory/getAll 2",
       data: {
         memories,
-        totalNumberOfPages,
+        numberOfPages: Math.ceil(numberOfMemories / LIMIT),
       },
     });
   } catch (error) {
