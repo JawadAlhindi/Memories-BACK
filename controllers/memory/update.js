@@ -1,8 +1,21 @@
 import { memoryModel } from "../../models/index.js";
 import { helpers } from "../../utils/index.js";
+import { cookiesConfig } from "../../configs/index.js";
 
 export default async function update(req, res) {
   const memory = req.body;
+
+  const localsAccessToken = res.locals.accessToken;
+  const backupResponse = {
+    statusCode: 200,
+    isAuth: true,
+    from: "controllers/memory/delete",
+    message: "all good.",
+    data: {
+      accessToken: cookiesConfig.access.name,
+    },
+  };
+  const response = localsAccessToken ? localsAccessToken : backupResponse;
 
   memory.tags = memory.tags.map((tag) =>
     tag.trim().toLowerCase().split(" ").join("_")
@@ -20,7 +33,7 @@ export default async function update(req, res) {
     );
 
     res.status(200).json({
-      accessToken: res.locals.accessToken,
+      accessToken: response,
       memory: {
         statusCode: 200,
         from: "controllers/memory/update 1",
@@ -33,7 +46,7 @@ export default async function update(req, res) {
   } catch (error) {
     console.log(error);
     return res.status(503).json({
-      accessToken: res.locals.accessToken,
+      accessToken: response,
       memory: {
         statusCode: 503,
         from: "controllers/memory/update 2",
