@@ -1,3 +1,4 @@
 import upload from "./upload.js";
+import destory from "./destory.js";
 
-export default { upload };
+export default { upload, destory };
