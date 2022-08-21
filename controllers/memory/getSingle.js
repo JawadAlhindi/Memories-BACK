@@ -11,7 +11,7 @@ export default async function getSingle(req, res) {
       .populate("author", "username avatar")
       .lean();
 
-    memory.cover = helpers.genImageURL(
+    memory.coverURL = helpers.genImageURL(
       memory.cover,
       "c_scale,h_1024/q_auto:best/dpr_auto"
     );
