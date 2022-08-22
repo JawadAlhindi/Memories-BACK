@@ -1,13 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { userModel } from "../../models/index.js";
 import { email } from "../../services/index.js";
+import { cloudinary } from "../../services/index.js";
 
-/**
- *
- * @param req.body.data - Obj contain all the sent data from the front .
- * @UserDB - expect:  username, password, email.
- * @return - obj contain statusCode, message, from
- */
 export default async function (req, res) {
   const data = req.body;
 
@@ -15,6 +10,23 @@ export default async function (req, res) {
     ...data,
     activationCode: uuidv4(),
   };
+
+  console.log(userData.avatar.substring(0, 30));
+
+  try {
+    userData.avatar = await cloudinary.upload(userData.avatar);
+  } catch (error) {
+    return res.status(503).json({
+      accessToken: response,
+      memory: {
+        statusCode: 503,
+        from: "controllers/auth/register 1",
+        message: "Something went wrong! Please try again.",
+      },
+    });
+  }
+
+  console.log(userData.avatar);
 
   try {
     const newUser = await userModel.create(userData);
