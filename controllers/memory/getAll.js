@@ -3,6 +3,7 @@ import { helpers } from "../../utils/index.js";
 
 export default async function (req, res) {
   const { page } = req.query;
+
   const LIMIT = 8;
   const startIndex = (parseInt(page) - 1) * LIMIT;
   let memories = [];
@@ -33,6 +34,14 @@ export default async function (req, res) {
         (memory.coverURL = helpers.genImageURL(
           memory.cover,
           "c_scale,h_420/q_auto:best/dpr_auto"
+        ))
+    );
+
+    memories.map(
+      (memory) =>
+        (memory.author.avatarURL = helpers.genImageURL(
+          memory.author.avatar,
+          "c_scale,w_256/q_auto:best/dpr_auto"
         ))
     );
 
