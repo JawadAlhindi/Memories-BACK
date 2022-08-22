@@ -16,6 +16,11 @@ export default async function getSingle(req, res) {
       "c_scale,h_1024/q_auto:best/dpr_auto"
     );
 
+    memory.author.avatarURL = helpers.genImageURL(
+      memory.author.avatar,
+      "c_scale,w_256/q_auto:best/dpr_auto"
+    );
+
     return res.status(200).json({
       statusCode: 200,
       from: "controllers/memory/genSingle 1",
