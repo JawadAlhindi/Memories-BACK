@@ -18,6 +18,11 @@ export default async function verifyAccessToken(req, res, next) {
       .select("_id username avatar role")
       .lean();
 
+    userData.avatarURL = helpers.genImageURL(
+      userData.avatar,
+      "c_scale,w_256/q_auto:best/dpr_auto"
+    );
+
     const encryptedData = await jwt.sign(userData, jwtConfig.ACCESS_SECRET, {
       expiresIn: jwtConfig.ACCESS_EXP,
     });
