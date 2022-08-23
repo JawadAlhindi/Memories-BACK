@@ -38,6 +38,11 @@ export default async function like(req, res) {
       .populate("author", "username avatar")
       .lean();
 
+    updatedComment.author.avatarURL = helpers.genImageURL(
+      updatedComment.author.avatar,
+      "c_scale,w_256/q_auto:best/dpr_auto"
+    );
+
     return res.status(200).json({
       accessToken: response,
       comment: {
