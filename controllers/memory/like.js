@@ -53,6 +53,11 @@ export default async function like(req, res) {
       `c_scale,${isCard ? "h_420" : "h_1024"}/q_auto:best/dpr_auto`
     );
 
+    updatedMemory.author.avatarURL = helpers.genImageURL(
+      updatedMemory.author.avatar,
+      "c_scale,w_256/q_auto:best/dpr_auto"
+    );
+
     return res.status(200).json({
       accessToken: response,
       memory: {
