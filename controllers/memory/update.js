@@ -1,21 +1,14 @@
 import { memoryModel } from "../../models/index.js";
 import { helpers } from "../../utils/index.js";
-import { cookiesConfig } from "../../configs/index.js";
+import { imgConfig } from "../../configs/index.js";
 
 export default async function update(req, res) {
   const memory = req.body;
 
-  const localsAccessToken = res.locals.accessToken;
-  const backupResponse = {
-    statusCode: 200,
-    isAuth: true,
-    from: "controllers/memory/delete",
-    message: "all good.",
-    data: {
-      accessToken: cookiesConfig.access.name,
-    },
-  };
-  const response = localsAccessToken ? localsAccessToken : backupResponse;
+  const response = helpers.tokenResponse(
+    res.locals.accessToken,
+    "controllers/memory/update 0"
+  );
 
   memory.tags = memory.tags.map((tag) =>
     tag.trim().toLowerCase().split(" ").join("_")
@@ -29,7 +22,7 @@ export default async function update(req, res) {
 
     updatedMemory.cover = helpers.genImageURL(
       updatedMemory.cover,
-      "c_scale,w_400/q_auto:best/dpr_auto"
+      imgConfig.cover.small
     );
 
     res.status(200).json({
