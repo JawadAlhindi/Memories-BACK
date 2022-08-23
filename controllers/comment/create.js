@@ -15,13 +15,19 @@ export default async function create(req, res) {
       .save()
       .then((res) => res.populate("author", "username avatar"));
 
+    const newComment = await JSON.parse(JSON.stringify(comment));
+    newComment.author.avatarURL = helpers.genImageURL(
+      comment.author.avatar,
+      "c_scale,w_256/q_auto:best/dpr_auto"
+    );
+
     res.status(200).json({
       accessToken: response,
       comment: {
         statusCode: 200,
         from: "controllers/comment/create 1",
         data: {
-          comment,
+          comment: newComment,
         },
       },
     });
