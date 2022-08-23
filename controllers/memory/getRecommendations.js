@@ -1,5 +1,6 @@
 import { memoryModel } from "../../models/index.js";
 import { helpers } from "../../utils/index.js";
+import { imgConfig } from "../../configs/index.js";
 
 export default async function getRecommendations(req, res) {
   const { _id } = req.params;
@@ -23,7 +24,7 @@ export default async function getRecommendations(req, res) {
           (memory) =>
             (memory.cover = helpers.genImageURL(
               memory.cover,
-              "c_fill,w_512,h_512,g_auto/q_auto:best/dpr_auto"
+              imgConfig.recommendations
             ))
         );
 

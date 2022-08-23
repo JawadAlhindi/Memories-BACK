@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { jwtConfig, cookiesConfig } from "../../configs/index.js";
+import { jwtConfig, cookiesConfig, imgConfig } from "../../configs/index.js";
 import { helpers } from "../../utils/index.js";
 
 export default async function (req, res) {
@@ -7,10 +7,7 @@ export default async function (req, res) {
   const userId = _id.toString();
   let userData = { _id, username, role, avatar };
 
-  userData.avatarURL = helpers.genImageURL(
-    avatar,
-    "c_scale,w_256/q_auto:best/dpr_auto"
-  );
+  userData.avatarURL = helpers.genImageURL(avatar, imgConfig.avatar);
 
   const accessToken = jwt.sign(
     {

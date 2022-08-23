@@ -1,5 +1,6 @@
 import { memoryModel } from "../../models/index.js";
 import { helpers } from "../../utils/index.js";
+import { imgConfig } from "../../configs/index.js";
 
 export default async function search(req, res) {
   const { query, tags } = req.query;
@@ -16,7 +17,7 @@ export default async function search(req, res) {
       (memory) =>
         (memory.cover = helpers.genImageURL(
           memory.cover,
-          "c_scale,w_400/q_auto:best/dpr_auto"
+          imgConfig.cover.small
         ))
     );
 

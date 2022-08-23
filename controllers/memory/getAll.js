@@ -1,5 +1,6 @@
 import { memoryModel } from "../../models/index.js";
 import { helpers } from "../../utils/index.js";
+import { imgConfig } from "../../configs/index.js";
 
 export default async function (req, res) {
   const { page } = req.query;
@@ -33,7 +34,7 @@ export default async function (req, res) {
       (memory) =>
         (memory.coverURL = helpers.genImageURL(
           memory.cover,
-          "c_scale,h_420/q_auto:best/dpr_auto"
+          imgConfig.cover.small
         ))
     );
 
@@ -41,7 +42,7 @@ export default async function (req, res) {
       (memory) =>
         (memory.author.avatarURL = helpers.genImageURL(
           memory.author.avatar,
-          "c_scale,w_256/q_auto:best/dpr_auto"
+          imgConfig.avatar
         ))
     );
 

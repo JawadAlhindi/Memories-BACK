@@ -1,6 +1,6 @@
 import { userModel } from "../../models/index.js";
 import jwt from "jsonwebtoken";
-import { cookiesConfig, jwtConfig } from "../../configs/index.js";
+import { cookiesConfig, jwtConfig, imgConfig } from "../../configs/index.js";
 import { helpers } from "../../utils/index.js";
 
 export default async function verifyAccessToken(req, res, next) {
@@ -18,10 +18,7 @@ export default async function verifyAccessToken(req, res, next) {
       .select("_id username avatar role")
       .lean();
 
-    userData.avatarURL = helpers.genImageURL(
-      userData.avatar,
-      "c_scale,w_256/q_auto:best/dpr_auto"
-    );
+    userData.avatarURL = helpers.genImageURL(userData.avatar, imgConfig.avatar);
 
     const encryptedData = await jwt.sign(userData, jwtConfig.ACCESS_SECRET, {
       expiresIn: jwtConfig.ACCESS_EXP,

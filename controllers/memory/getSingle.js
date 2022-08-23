@@ -1,5 +1,6 @@
 import { memoryModel } from "../../models/index.js";
 import { helpers } from "../../utils/index.js";
+import { imgConfig } from "../../configs/index.js";
 
 export default async function getSingle(req, res) {
   const { _id } = req.params;
@@ -11,14 +12,11 @@ export default async function getSingle(req, res) {
       .populate("author", "username avatar")
       .lean();
 
-    memory.coverURL = helpers.genImageURL(
-      memory.cover,
-      "c_scale,h_1024/q_auto:best/dpr_auto"
-    );
+    memory.coverURL = helpers.genImageURL(memory.cover, imgConfig.cover.big);
 
     memory.author.avatarURL = helpers.genImageURL(
       memory.author.avatar,
-      "c_scale,w_256/q_auto:best/dpr_auto"
+      imgConfig.avatar
     );
 
     return res.status(200).json({

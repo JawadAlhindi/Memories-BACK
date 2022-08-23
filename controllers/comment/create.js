@@ -1,5 +1,6 @@
 import { commentModel } from "../../models/index.js";
 import { helpers } from "../../utils/index.js";
+import { imgConfig } from "../../configs/index.js";
 
 export default async function create(req, res) {
   const data = req.body;
@@ -18,7 +19,7 @@ export default async function create(req, res) {
     const newComment = await JSON.parse(JSON.stringify(comment));
     newComment.author.avatarURL = helpers.genImageURL(
       comment.author.avatar,
-      "c_scale,w_256/q_auto:best/dpr_auto"
+      imgConfig.avatar
     );
 
     res.status(200).json({
