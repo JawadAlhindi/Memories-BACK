@@ -11,6 +11,14 @@ export default async function getAll(req, res) {
       .sort({ _id: -1 })
       .lean();
 
+    comments.map(
+      (comment) =>
+        (comment.author.avatarURL = helpers.genImageURL(
+          comment.author.avatar,
+          "c_scale,w_256/q_auto:best/dpr_auto"
+        ))
+    );
+
     res.status(200).json({
       statusCode: 200,
       from: "controllers/comment/getAll 1",
