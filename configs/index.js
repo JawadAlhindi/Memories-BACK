@@ -4,6 +4,7 @@ import corsConfig from "./cors.js";
 import dbConfig from "./db.js";
 import jwtConfig from "./jwt.js";
 import urlConfig from "./url.js";
+import imgConfig from "./images.js";
 
 export {
   cloudinaryConfig,
@@ -12,4 +13,5 @@ export {
   dbConfig,
   jwtConfig,
   urlConfig,
+  imgConfig,
 };
