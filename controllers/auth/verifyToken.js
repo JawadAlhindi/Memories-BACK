@@ -1,17 +1,10 @@
-import { cookiesConfig } from "../../configs/index.js";
+import { helpers } from "../../utils/index.js";
 
 export default async function verifyToken(req, res) {
-  const locals = res.locals.accessToken;
-  const backupResponse = {
-    statusCode: 200,
-    isAuth: true,
-    from: "controllers/auth/verifyToken 1",
-    message: "all good.",
-    data: {
-      accessToken: cookiesConfig.access.name,
-    },
-  };
-  const response = locals ? locals : backupResponse;
+  const response = helpers.tokenResponse(
+    res.locals.accessToken,
+    "controllers/auth/verifyToken 0"
+  );
 
   return res.status(200).json({
     ...response,

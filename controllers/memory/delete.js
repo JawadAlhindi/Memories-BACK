@@ -1,21 +1,14 @@
 import { memoryModel } from "../../models/index.js";
-import { cookiesConfig } from "../../configs/index.js";
 import { cloudinary } from "../../services/index.js";
+import { helpers } from "../../utils/index.js";
 
 export default async function _delete(req, res) {
   const { _id, public_id } = req.body;
 
-  const localsAccessToken = res.locals.accessToken;
-  const backupResponse = {
-    statusCode: 200,
-    isAuth: true,
-    from: "controllers/memory/delete",
-    message: "all good.",
-    data: {
-      accessToken: cookiesConfig.access.name,
-    },
-  };
-  const response = localsAccessToken ? localsAccessToken : backupResponse;
+  const response = helpers.tokenResponse(
+    res.locals.accessToken,
+    "controllers/comment/delete 0"
+  );
 
   try {
     await cloudinary.destory(public_id);

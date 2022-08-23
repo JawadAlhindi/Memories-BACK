@@ -1,20 +1,14 @@
 import { memoryModel } from "../../models/index.js";
 import { cloudinary } from "../../services/index.js";
-import { cookiesConfig } from "../../configs/index.js";
+import { helpers } from "../../utils/index.js";
 
 export default async function (req, res) {
   const memory = req.body;
-  const localsAccessToken = res.locals.accessToken;
-  const backupResponse = {
-    statusCode: 200,
-    isAuth: true,
-    from: "controllers/memory/create",
-    message: "all good.",
-    data: {
-      accessToken: cookiesConfig.access.name,
-    },
-  };
-  const response = localsAccessToken ? localsAccessToken : backupResponse;
+
+  const response = helpers.tokenResponse(
+    res.locals.accessToken,
+    "controllers/comment/create 0"
+  );
 
   try {
     memory.cover = await cloudinary.upload(memory.cover);
