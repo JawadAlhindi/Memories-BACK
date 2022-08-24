@@ -6,6 +6,7 @@ const router = express.Router();
 
 //GET
 router.get("/getALl", memory.getAll);
+router.get("/getAllLikes", memory.getAllLikes);
 router.get("/getTags", memory.getTags);
 router.get("/search", memory.search);
 router.get("/getSingle/:_id", dbMW.isValid, memory.getSingle);
