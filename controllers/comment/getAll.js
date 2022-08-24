@@ -3,11 +3,12 @@ import { helpers } from "../../utils/index.js";
 import { imgConfig } from "../../configs/index.js";
 
 export default async function getAll(req, res) {
-  const { _id } = req.params;
+  const { _id, userId } = req.query;
+  const query = _id ? { memoryId: _id } : { author: userId };
 
   try {
     const comments = await commentModel
-      .find({ memoryId: _id })
+      .find(query)
       .populate("author", "username avatar")
       .sort({ _id: -1 })
       .lean();
