@@ -3,7 +3,8 @@ import { helpers } from "../../utils/index.js";
 import { imgConfig } from "../../configs/index.js";
 
 export default async function (req, res) {
-  const { page } = req.query;
+  const { page, userId } = req.query;
+  const query = userId ? { author: userId } : {};
 
   const LIMIT = 8;
   const startIndex = (parseInt(page) - 1) * LIMIT;
@@ -11,7 +12,7 @@ export default async function (req, res) {
   let numberOfMemories = 1;
 
   try {
-    numberOfMemories = await memoryModel.countDocuments();
+    numberOfMemories = await memoryModel.countDocuments(query);
   } catch (error) {
     console.log(error);
     return res.status(503).json({
@@ -23,7 +24,7 @@ export default async function (req, res) {
 
   try {
     memories = await memoryModel
-      .find()
+      .find(query)
       .sort({ _id: -1 })
       .skip(startIndex)
       .limit(LIMIT)
