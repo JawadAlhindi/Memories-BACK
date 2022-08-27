@@ -5,7 +5,7 @@ import { commentCons as comment } from "../controllers/index.js";
 const router = express.Router();
 
 //GET
-router.get("/getALl", comment.getAll);
+router.get("/getALl", [dbMW.isValid, dbMW.isCommentsExist], comment.getAll);
 
 //POST
 router.post(
