@@ -12,12 +12,7 @@ router.post(
 
 router.post(
   "/login",
-  [
-    authMW.isEmailExists,
-    authMW.isPasswordCorrect,
-    authMW.isUserActive,
-    //authMW.clearCookies, //TODO: check later why it doesn't work. (note: is add 2 empty cookies insted of clearing)
-  ],
+  [authMW.isEmailExists, authMW.isPasswordCorrect, authMW.isUserActive],
   authCons.login
 );
 
