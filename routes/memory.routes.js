@@ -5,11 +5,14 @@ import { memoryCons as memory } from "../controllers/index.js";
 const router = express.Router();
 
 //GET
-router.get("/getALl", memory.getAll);
-router.get("/getAllLikes", memory.getAllLikes);
+router.get("/getALl", dbMW.isUsernameExist, memory.getAll);
 router.get("/getTags", memory.getTags);
 router.get("/search", memory.search);
-router.get("/getSingle/:_id", dbMW.isValid, memory.getSingle);
+router.get(
+  "/getSingle/:_id",
+  [dbMW.isValid, dbMW.isMemoryExist],
+  memory.getSingle
+);
 
 //POST
 router.post(
