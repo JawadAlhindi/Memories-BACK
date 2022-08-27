@@ -5,7 +5,7 @@ export default async function isUsernameExist(req, res, next) {
 
   if (username) {
     const usernameReg = new RegExp(username, "i");
-    const isExist = await userModel.exists({ usernameReg });
+    const isExist = await userModel.exists({ username: usernameReg });
 
     if (isExist) {
       res.locals.userId = isExist._id.toString();
