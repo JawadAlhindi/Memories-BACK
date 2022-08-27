@@ -13,7 +13,7 @@ export default async function verifyCode(req, res) {
       statusCode: 404,
       from: "controllers/auth/verifyCode 1",
       message:
-        "We couldn't find this activation code in our database.\n Please check your email and try again.",
+        "We couldn't verify this activation code in the database.\nPlease Check your email and try again.",
     });
   }
 
