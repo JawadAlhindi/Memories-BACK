@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 export default async function isValid(req, res, next) {
   const { _id: bodyID } = req.body;
   const { _id: paramsID } = req.params;
-  const _id = bodyID ? bodyID : paramsID;
+  const { _id: queryID } = req.query;
+  const _id = bodyID ? bodyID : paramsID ? paramsID : queryID;
 
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).json({
