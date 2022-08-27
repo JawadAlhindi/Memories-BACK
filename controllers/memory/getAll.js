@@ -1,10 +1,17 @@
-import { memoryModel } from "../../models/index.js";
+import { memoryModel, commentModel } from "../../models/index.js";
 import { helpers } from "../../utils/index.js";
 import { imgConfig } from "../../configs/index.js";
 
 export default async function (req, res) {
-  const { page, userId } = req.query;
-  const query = userId ? { author: userId } : {};
+  const { page, type } = req.query;
+  const { userId } = res.locals;
+  const isMemory = type === "memories" && { author: userId };
+  const isLike = type === "likes" && { likes: userId };
+
+  let query = {};
+  if (userId) {
+    query = isMemory ? isMemory : isLike;
+  }
 
   const LIMIT = 8;
   const startIndex = (parseInt(page) - 1) * LIMIT;
@@ -31,6 +38,17 @@ export default async function (req, res) {
       .populate("author", "username avatar")
       .lean();
 
+    //Get Number of Comments for each Memory
+    await Promise.all(
+      memories.map(
+        async (memory) =>
+          (memory.numberOfComments = await commentModel.countDocuments({
+            memoryId: memory._id,
+          }))
+      )
+    );
+
+    //Generate Cover URL
     memories.map(
       (memory) =>
         (memory.coverURL = helpers.genImageURL(
@@ -39,6 +57,7 @@ export default async function (req, res) {
         ))
     );
 
+    //Generate Avatar URL
     memories.map(
       (memory) =>
         (memory.author.avatarURL = helpers.genImageURL(
