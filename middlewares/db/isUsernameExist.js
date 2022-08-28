@@ -1,7 +1,9 @@
 import { userModel } from "../../models/index.js";
 
 export default async function isUsernameExist(req, res, next) {
-  const { username } = req.query;
+  const { username: nameQuery } = req.query;
+  const { username: nameParam } = req.params;
+  const username = nameQuery ? nameQuery : nameParam;
 
   if (username) {
     const usernameReg = new RegExp(username, "i");
