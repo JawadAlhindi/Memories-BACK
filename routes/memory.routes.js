@@ -7,7 +7,6 @@ const router = express.Router();
 //GET
 router.get("/getALl", dbMW.isUsernameExist, memory.getAll);
 router.get("/getTags", memory.getTags);
-router.get("/search", memory.search);
 router.get(
   "/getSingle/:_id",
   [dbMW.isValid, dbMW.isMemoryExist],
