@@ -18,10 +18,10 @@ app.use(cookieParser());
 
 //Main Routes
 app.use("/auth", route.auth);
+app.use("/user", route.user);
 app.use("/memory", route.memory);
 app.use("/comment", route.comment);
-// app.use("/tags", route.tags);
-// app.use("/titles", route.titles);
+app.use("/search", route.search);
 app.use("/recommendations", route.recommendations);
 
 export default app;
