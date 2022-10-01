@@ -5,6 +5,8 @@ import { dbConfig } from "./configs/index.js";
 
 const PORT = process.env.PORT || 5000;
 
+//restart railway ¯\_(ツ)_/¯ #1
+
 mongoose
   .connect(dbConfig.URL, dbConfig.OPTIONS)
   .then(() => {
